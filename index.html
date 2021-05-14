@@ -28,14 +28,14 @@
     <div>
       <table>
         <tr>
-          <th>Name</th>
-          <th>Content</th>
-          <th>timestamp</th>
-          
+          <th class="name">Name</th>
+          <th class="content">Content</th>
+          <th class="timestamp">timestamp</th>
+
         </tr>
         <tr v-for="(item, index) in list" :key="index">
           <td>{{item.name}}</td>
-          <td>{{item.content}}</td>
+          <td class="content-td">{{item.content}}</td>
           <td>{{item.timestamp}}</td>
         </tr>
       </table>
@@ -63,24 +63,24 @@
         console.log(JSON.stringify(this.messageForm));
       },
       onSubmit() {
-        this.$refs.messageFormRef.validate( val => {
+        this.$refs.messageFormRef.validate(val => {
           if (val) {
-           this.postMessage()
+            this.postMessage()
           }
         })
       },
-      async postMessage(){
+      async postMessage() {
         const { data: res } = await axios.get("http://127.0.0.1:3000/post", {
-              params: {
-                name: this.messageForm.name,
-                content: this.messageForm.content
-              }
-            })
-            this.list = res
-            console.log(res);
+          params: {
+            name: this.messageForm.name,
+            content: this.messageForm.content
+          }
+        })
+        this.list = res
+        console.log(res);
       },
-      async getMessage(){
-        const { data: res } = await axios.get("http://127.0.0.1:3000/get")
+      async getMessage() {
+        const { data: res } = await axios.get("http://127.0.0.1:3000/list")
         this.list = res
         console.log(res)
       }
@@ -90,5 +90,28 @@
     },
   })
 </script>
+<style>
+  table {
+    border-collapse: collapse;
+  }
+  td{
+    min-height: 30px;
+  }
+  td,
+  th {
+    border: 1px solid #000;
+  }
+
+  .content {
+    width: 400px;
+
+  }
+  .content-td{
+    width: 400px; 
+    max-height: 100px;
+    border:none;
+    border-bottom: 1px solid #000;
+  }
+</style>
 
 </html>
